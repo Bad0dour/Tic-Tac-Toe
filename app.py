@@ -1,20 +1,31 @@
 import tkinter as tk
-import os
-print(os.path.exists("Images/board.png"))
+from tkmacosx import *
+from main import placement
 
 root = tk.Tk()
 root.title("Tic-Tac-Toe")
 root.minsize(300,300)
-root.geometry("300x300")
-tk.Label(root, text="Tic-Tac-Toe").pack()
+root.geometry("700x700+100+200")
+root.attributes('-topmost', True)
 
-board = tk.PhotoImage(file="Images/board.png")
+# GAME GUI CREATION
+board_image = tk.PhotoImage(file="Images/board.png")
+circle_image = tk.PhotoImage(file="Images/circle.png")
+cross_image = tk.PhotoImage(file="Images/cross.png")
 
-canvas = tk.Canvas(root, width=1000, height=1000)
-canvas.create_image(0, 0, anchor=tk.NW, image=board)
-canvas.pack()
+tk.Label(root, text="Tic-Tac-Toe")
 
-square1 = tk.Frame(root, width=230, height=230, bg="white")
-canvas.create_window(110, 110, window=square1)
+for row in range(3):
+    for col in range(3):
+        Button(
+            root,
+            width=100,
+            height=100,
+            bg="#1E1E1E",
+            focuscolor="",
+            activebackground="#1E1E1E",
+            command=add_placement((row,col))
+        ).grid(row=row, column=col)
+
 
 root.mainloop()
