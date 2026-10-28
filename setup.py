@@ -1,11 +1,20 @@
-naught_placements = set()
-cross_placements = set()
-
 bg_colour = "#1E1E1E"
 
-shape_colour_map = {
+BIG_FONT = ("Avenir Next", 60, "bold")
+SMALL_FONT = ("Avenir Next", 30, "bold")
+
+colour_map = {
     "CROSSES": "#FFB766",
-    "NAUGHTS": "#89CFF0"
+    "CROSSES_ACCENT": "#F2600C",
+    "NAUGHTS": "#89CFF0",
+    "NAUGHTS_ACCENT": "#1E4E8C"
+}
+
+score_label = {}
+
+score = {
+    "NAUGHTS": 0,
+    "CROSSES": 0
 }
 
 win_combos = [
@@ -31,4 +40,16 @@ cell_mapping: dict[tuple[int,int],int] = {
     (2,0) : 7,
     (2,1) : 8,
     (2,2) : 9,
+}
+
+button_tracker: dict[int, None | str] =  {
+    1 : None,
+    2 : None,
+    3 : None,
+    4 : None,
+    5 : None,
+    6 : None,
+    7 : None,
+    8 : None,
+    9 : None,
 }
