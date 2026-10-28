@@ -3,6 +3,11 @@ cross_placements = set()
 
 bg_colour = "#1E1E1E"
 
+shape_colour_map = {
+    "CROSSES": "#FFB766",
+    "NAUGHTS": "#89CFF0"
+}
+
 win_combos = [
     {1,2,3},
     {4,5,6},

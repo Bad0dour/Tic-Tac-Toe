@@ -1,7 +1,7 @@
 from images import upload_images
 import tkinter as tk
 from tkmacosx import *
-from setup import naught_placements, cross_placements, win_combos, naughts_turn, cell_mapping, bg_colour
+from setup import *
 
 
 # SETUP
@@ -11,14 +11,10 @@ root.minsize(300,300)
 root.geometry("700x700+100+200")
 root.attributes('-topmost', True)
 
-    #--BG Canvas
-canvas = tk.Canvas(root, bg=bg_colour, highlightthickness=0)
-canvas.pack(fill="both", expand=True)
-
     #--Elements
-header = tk.Label(canvas, text="Tic-Tac-Toe")
+header = tk.Label(root, text="Tic-Tac-Toe", font=("Arial", 30))
 header.pack()
-buttons_grid = tk.Frame(canvas, width=500, height=500)
+buttons_grid = tk.Frame(root, width=500, height=500)
 buttons_grid.pack()
 
 images_list = upload_images()
@@ -36,22 +32,58 @@ def disable_all_buttons():
 
 def game_win(shape: str) -> None:
     print(f"{shape} WINS!")
-    
-    center_x = canvas.winfo_width() / 2
-    center_y = canvas.winfo_height() / 2
+    shape_color = shape_colour_map[shape]
 
-    # Create the text right at that relative center
-    win_text = canvas.create_text(
-        center_x, center_y, 
+    # WIN LABEL
+    tk.Label(
+        root,
         text=f"{shape} WINS!", 
-        font=("Arial", 40, "bold"), 
-    )
-    canvas.tag_raise(win_text)
+        font=("Arial", 60, "bold"),
+        bg=shape_color,
+        fg=bg_colour,
+        relief="solid", borderwidth=2
+        
+    ).place(relx=0.5, rely=0.5, anchor="center")
+
+    # PLAY AGAIN BUTTON
+    Button(
+        root,
+        text="Play Again?", 
+        font=("Arial", 30, "bold"),
+        bg="white",
+        fg=bg_colour,
+        command=start
+    ).place(relx=0.5, rely=0.6, anchor="center")
+    
 
 def game_draw():
-    disable_all_buttons()
+    print("DRAW!")
+
+    # WIN LABEL
+    tk.Label(
+        root,
+        text="DRAW!", 
+        font=("Arial", 60, "bold"),
+        bg="white",
+        fg=bg_colour,
+        relief="solid", borderwidth=2
+        
+    ).place(relx=0.5, rely=0.5, anchor="center")
+
+    # PLAY AGAIN BUTTON
+    Button(
+        root,
+        text="Play Again?", 
+        font=("Arial", 30, "bold"),
+        bg="white",
+        fg=bg_colour,
+        command=start
+    ).place(relx=0.5, rely=0.6, anchor="center")
 
 def start():
+    global naught_placements, cross_placements
+    naught_placements = set()
+    cross_placements = set()
     for row in range(3):
         for col in range(3):
             button = Button(
@@ -64,7 +96,7 @@ def start():
             )
             button.grid(row=row, column=col, padx=10, pady=10)
             button.configure(command=lambda r=row, c=col, b=button: placement((r,c), b))
-    print(f"\nCROSSES TURN:")
+    print("\nCROSSES TURN:")
 
 
 def placement(square: tuple[int,int], button) -> None:
@@ -74,6 +106,7 @@ def placement(square: tuple[int,int], button) -> None:
     
     # Quit early if cell taken already
     all_placements = naught_placements | cross_placements
+    print(f"All_placemetns: {all_placements}")
     if cell_mapping[square] in all_placements:
         print("Space Already Taken...")
         enable_all_buttons()
@@ -97,9 +130,11 @@ def placement(square: tuple[int,int], button) -> None:
             game_win('CROSSES')
             return
 
+    if len(naught_placements) + len(cross_placements) == 9:
+        game_draw()
+
     #swap turns
     naughts_turn = not naughts_turn 
-    
     print(f"Naught Placements: {naught_placements}")
     print(f"Cross Placements: {cross_placements}")
     if naughts_turn:
