@@ -148,14 +148,14 @@ draw_label = tk.Label(root,text="DRAW!",font=BIG_FONT,bg="white",fg=bg_colour,re
 win_label = tk.Label(root,text="",font=BIG_FONT,bg="white",fg="white",relief="solid",borderwidth=4, padx=10)
 play_again = Button(root,text="Play Again?",font=SMALL_FONT,bg="white",fg=bg_colour,command=start,padx=5)
 
-naughts_label = tk.Label(root,text=0,font=BIG_FONT,bg=bg_colour,fg=colour_map['NAUGHTS_ACCENT'])
-naughts_label.place(relx=0.04, rely=0.01)
+naughts_label = tk.Label(root,text="- O",font=BIG_FONT,bg=bg_colour,fg=colour_map['NAUGHTS_ACCENT'])
+naughts_label.place(relx=0.04, rely=0.01, x=50)
 NAUGHTS_score_label = tk.Label(root,text=0,font=BIG_FONT,bg=bg_colour,fg=colour_map['NAUGHTS_ACCENT'])
 NAUGHTS_score_label.place(relx=0.04, rely=0.01)
 score_label["NAUGHTS"] = NAUGHTS_score_label
 
-crosses_label = tk.Label(root,text=0,font=BIG_FONT,bg=bg_colour,fg=colour_map['CROSSES_ACCENT'])
-crosses_label.place(relx=0.9, rely=0.01)
+crosses_label = tk.Label(root,text="X -",font=BIG_FONT,bg=bg_colour,fg=colour_map['CROSSES_ACCENT'])
+crosses_label.place(relx=0.9, rely=0.01, x=-90)
 CROSSES_score_label = tk.Label(root,text=0,font=BIG_FONT,bg=bg_colour,fg=colour_map['CROSSES_ACCENT'])
 CROSSES_score_label.place(relx=0.9, rely=0.01)
 score_label["CROSSES"] = CROSSES_score_label
